@@ -15,8 +15,6 @@ public partial class TestDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Post> Posts { get; set; }
-
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -24,18 +22,11 @@ public partial class TestDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Post>(entity =>
-        {
-            entity.Property(e => e.TimeStamp).HasColumnType("datetime");
-        });
-
         modelBuilder.Entity<User>(entity =>
         {
-            entity.Property(e => e.Contact).HasMaxLength(20);
-            entity.Property(e => e.Email).HasMaxLength(100);
-            entity.Property(e => e.Name).HasMaxLength(200);
-            entity.Property(e => e.Password).HasMaxLength(200);
-            entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+            entity.HasIndex(e => e.Email, "UQ__Users__A9D10534B7CADAB9").IsUnique();
+
+            entity.Property(e => e.Email).HasMaxLength(500);
         });
 
         OnModelCreatingPartial(modelBuilder);

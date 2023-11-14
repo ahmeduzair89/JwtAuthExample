@@ -3,6 +3,7 @@ using JwtAuthExample.WrapperModels.UserModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace JwtAuthExample.Controllers
 {
@@ -29,7 +30,16 @@ namespace JwtAuthExample.Controllers
         public async Task<IActionResult> RegisterUser([FromBody] UserRegisterModel model)
         {
             var res = await userRepo.RegisterUser(model);
-            return res.Success ? Ok(res) : BadRequest();
+            return Ok(res);
+        }
+
+        [HttpGet("CheckAuthenticated")]
+        [Authorize]
+        public async Task<IActionResult> CheckAuthenticated()
+        {
+         ClaimsPrincipal currentUser =    HttpContext.User;
+            var res = await userRepo.CheckAuthenticated(currentUser);
+            return Ok(res);
         }
     }
 }
