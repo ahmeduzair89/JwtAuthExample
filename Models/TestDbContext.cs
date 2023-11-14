@@ -24,9 +24,9 @@ public partial class TestDbContext : DbContext
     {
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasIndex(e => e.Email, "UQ__Users__A9D10534B7CADAB9").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ_email").IsUnique();
 
-            entity.Property(e => e.Email).HasMaxLength(500);
+            entity.Property(e => e.Email).HasMaxLength(400);
         });
 
         OnModelCreatingPartial(modelBuilder);

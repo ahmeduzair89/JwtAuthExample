@@ -79,7 +79,7 @@ namespace JwtAuthExample.DataRepositories
             try
             {
                 User localUser = new User();
-                localUser.Name = model.Name;
+                localUser.Name = model.Name;                    
                 localUser.Email = model.Email;
                 localUser.ProfilePicture = model.ProfilePicture ?? "https://i.pravatar.cc/300";
                 localUser.Contact = model.Contact;
